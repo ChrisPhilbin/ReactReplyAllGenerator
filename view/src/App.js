@@ -14,11 +14,6 @@ const App = () => {
   return(
     <div>
       <ReplySelector replies={replies}/>
-      {replies.length ? replies.map((reply) => (
-        <div>
-          {reply.message}
-        </div>
-      )) : null}
     </div>
   )
 }

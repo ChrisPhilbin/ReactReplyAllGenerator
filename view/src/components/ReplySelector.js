@@ -39,7 +39,7 @@ const ReplySelector = (props) => {
     let [type, setType]               = useState('')
     let [name, setName]               = useState('')
     let [isGenerated, setIsGenerated] = useState(false)
-    let [reply, setReply]             = useState('Hello there this is a test reply')
+    let [reply, setReply]             = useState('')
 
     const marks = [
         {
@@ -60,31 +60,39 @@ const ReplySelector = (props) => {
         setRating(newValue)
     }
 
+    const copyToClipboard = () => {
+        window.prompt("Copy to clipboard: Ctrl+C, Enter", reply)
+    }
+
     let showReply
 
     if (isGenerated) { 
         showReply = (
-            <TextField
-                className={classes.replyText}
-                defaultValue={reply}
-                disabled
-                fullWidth
-            />
+            <>
+                <TextField
+                    className={classes.replyText}
+                    defaultValue={reply}
+                    disabled
+                    fullWidth
+                />
+                <Button onClick={copyToClipboard}>
+                    Copy to clipboard
+                </Button>
+            </>
         )
     } else {
         showReply = ( null )
     }
 
     const generateReply = () => {
-        console.log(rating, "rating value")
-        console.log(replies, "Initial arr of replies from props")
         let possibleReplies = replies.filter( (reply) => {
             return reply.rating === rating && reply.type === type
         })
         console.log(possibleReplies, "matching replies")
-        setReply(possibleReplies[Math.floor(Math.random()*possibleReplies.length)])
+        let newReply = possibleReplies[Math.floor(Math.random()*possibleReplies.length)]
+        let customizedReply = newReply.message.replace("{{first_name}}", name)
+        setReply(customizedReply)
         console.log(reply, "randomly selected reply")
-        reply.replace("{{first_name}}", name)
         setIsGenerated(true)
     }
 

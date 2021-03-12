@@ -12,6 +12,7 @@ exports.getAllReplies = (request, response) => {
                     replyId: doc.id,
                     rating: doc.data().rating,
 					message: doc.data().message,
+					type: doc.data().type,
 					createdAt: doc.data().createdAt,
 				})
 			})
