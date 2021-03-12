@@ -19,21 +19,27 @@ const useStyles = makeStyles((theme) => ({
     generateButton: {
         padding: 10,
         marginTop: 35,
+        marginBottom: 35
     },
     replyForm: {
         padding: 20
+    },
+    replyText: {
+        
     }
 }))
 
-const ReplySelector = () => {
+const ReplySelector = (props) => {
 
     const classes = useStyles();
+
+    let replies = props.replies
 
     let [rating, setRating]           = useState(5)
     let [type, setType]               = useState('')
     let [name, setName]               = useState('')
     let [isGenerated, setIsGenerated] = useState(false)
-    let [reply, setReply]             = useState('')
+    let [reply, setReply]             = useState('Hello there this is a test reply')
 
     const marks = [
         {
@@ -59,13 +65,22 @@ const ReplySelector = () => {
     if (isGenerated) { 
         showReply = (
             <TextField
+                className={classes.replyText}
                 defaultValue={reply}
+                disabled
+                fullWidth
             />
         )
+    } else {
+        showReply = ( null )
     }
 
-    const handleSubmit = () => {
-        return alert("handling submit!")
+    const generateReply = () => {
+        let possibleReplies = replies.filter( (reply) => {
+            return reply.rating === rating && reply.type === type
+        })
+        setReply(possibleReplies[Math.floor(Math.random()*possibleReplies.length)])
+        setIsGenerated(true)
     }
 
     return(
@@ -99,7 +114,7 @@ const ReplySelector = () => {
                     marks={marks}
                     valueLabelDisplay="on"
                 />
-                <Button variant="contained" color="primary" className={classes.generateButton}>
+                <Button variant="contained" color="primary" className={classes.generateButton} onClick={generateReply}>
                     Generate reply
                 </Button>
                 { showReply }

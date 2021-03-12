@@ -13,7 +13,7 @@ const App = () => {
 
   return(
     <div>
-      <ReplySelector />
+      <ReplySelector replies={replies}/>
       {replies.length ? replies.map((reply) => (
         <div>
           {reply.message}
