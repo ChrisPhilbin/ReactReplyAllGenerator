@@ -88,12 +88,14 @@ const ReplySelector = (props) => {
         let possibleReplies = replies.filter( (reply) => {
             return reply.rating === rating && reply.type === type
         })
-        console.log(possibleReplies, "matching replies")
-        let newReply = possibleReplies[Math.floor(Math.random()*possibleReplies.length)]
-        let customizedReply = newReply.message.replace("{{first_name}}", name)
-        setReply(customizedReply)
-        console.log(reply, "randomly selected reply")
-        setIsGenerated(true)
+        if (possibleReplies.length) {
+            let newReply = possibleReplies[Math.floor(Math.random()*possibleReplies.length)]
+            let customizedMessage = newReply.message.replace("{{first_name}}", name)
+            setReply(customizedMessage)
+            setIsGenerated(true)
+        } else {
+            alert("It looks like there isn't a reply that matches your criteria")
+        }
     }
 
     return(
