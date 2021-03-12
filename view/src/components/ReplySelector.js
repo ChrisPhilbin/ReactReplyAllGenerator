@@ -43,15 +43,15 @@ const ReplySelector = (props) => {
 
     const marks = [
         {
-            value: 10,
+            value: 2,
             label: "No personality"
         },
         {
-            value: 50,
+            value: 5,
             label: "Normal"
         },
         {
-            value: 90,
+            value: 9,
             label: "Sold your soul"
         }
     ]
@@ -76,10 +76,15 @@ const ReplySelector = (props) => {
     }
 
     const generateReply = () => {
+        console.log(rating, "rating value")
+        console.log(replies, "Initial arr of replies from props")
         let possibleReplies = replies.filter( (reply) => {
             return reply.rating === rating && reply.type === type
         })
+        console.log(possibleReplies, "matching replies")
         setReply(possibleReplies[Math.floor(Math.random()*possibleReplies.length)])
+        console.log(reply, "randomly selected reply")
+        reply.replace("{{first_name}}", name)
         setIsGenerated(true)
     }
 
@@ -110,7 +115,9 @@ const ReplySelector = (props) => {
                     value={rating}
                     onChange={handleRatingChange}
                     aria-labelledby="discrete-slider-always"
-                    step={10}
+                    step={1}
+                    max={10}
+                    min={1}
                     marks={marks}
                     valueLabelDisplay="on"
                 />
