@@ -7,11 +7,26 @@ import Slider from '@material-ui/core/Slider'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 
+const useStyles = makeStyles((theme) => ({
+
+}))
+
 const CreateReply = () => {
+
+    let [types, setTypes] = useState([])
+
+    useEffect(() => {
+        
+    }, [])
+
+    const classes = useStyles()
+
     return(
-        <div>
-            Hello from CreateReply component
-        </div>
+        <Container maxWidth={sm}>
+            <Paper elevation={3}>
+                <Typography align="center" variant="h3" gutterBottom>Add a new reply</Typography>
+            </Paper>
+        </Container>
     )
 }
 export default CreateReply
