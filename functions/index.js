@@ -9,4 +9,10 @@ const {
 app.get('/replies', getAllReplies)
 app.post('/replies', createOneReply)
 
+const { 
+    getAllTypes
+} = require('./api/types')
+
+app.get('/types', getAllTypes)
+
 exports.api = functions.https.onRequest(app)

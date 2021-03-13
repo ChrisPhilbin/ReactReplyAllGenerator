@@ -16,7 +16,9 @@ const CreateReply = () => {
     let [types, setTypes] = useState([])
 
     useEffect(() => {
-        
+        fetch('/types')
+        .then(response => response.json)
+        .then(data => setTypes(data))
     }, [])
 
     const classes = useStyles()
