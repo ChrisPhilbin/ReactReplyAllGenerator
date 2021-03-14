@@ -140,7 +140,7 @@ const ReplySelector = (props) => {
                         <DialogContentText>
                             Add the body of your reply below. HINT: use <strong>{"{{first_name}}"}</strong> to automatically insert a name when generating your reply
                         </DialogContentText>
-                        <CreateReply types={types}/>
+                        <CreateReply types={types} setOpen={setOpen}/>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={handleCloseDialog} color="primary">

@@ -52,6 +52,7 @@ const CreateReply = (props) => {
             createdAt: new Date()
         }
         alert(newReply.message)
+        props.setOpen(false)
     }
 
     return(
