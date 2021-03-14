@@ -16,9 +16,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const CreateReply = () => {
+const CreateReply = (props) => {
 
-    let [types, setTypes] = useState([])
+    let types = props.types
+
     let [type, setType]   = useState('')
     let [rating, setRating] = useState(5)
     let [message, setMessage] = useState('')
@@ -37,12 +38,6 @@ const CreateReply = () => {
             label: "Sold your soul"
         }
     ]
-
-    useEffect(() => {
-        fetch('/types')
-        .then(response => response.json)
-        .then(data => setTypes(data))
-    }, [])
 
     const classes = useStyles()
 

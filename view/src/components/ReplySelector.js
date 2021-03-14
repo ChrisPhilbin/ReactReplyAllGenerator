@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Button from '@material-ui/core/Button'
 import Container from '@material-ui/core/Container'
 import CreateReply from './CreateReply'
@@ -57,6 +57,13 @@ const ReplySelector = (props) => {
     let [isGenerated, setIsGenerated] = useState(false)
     let [reply, setReply]             = useState('')
     let [open, setOpen]               = useState(false)
+    let [types, setTypes]             = useState([])
+
+    useEffect(() => {
+        fetch('/types')
+        .then(response => response.json())
+        .then(data => setTypes(data))
+    }, [])
 
     const marks = [
         {
@@ -133,7 +140,7 @@ const ReplySelector = (props) => {
                         <DialogContentText>
                             Add the body of your reply below. HINT: use <strong>{"{{first_name}}"}</strong> to automatically insert a name when generating your reply
                         </DialogContentText>
-                        <CreateReply />
+                        <CreateReply types={types}/>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={handleCloseDialog} color="primary">
