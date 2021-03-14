@@ -19,6 +19,7 @@ const CreateReply = () => {
     let [types, setTypes] = useState([])
     let [type, setType]   = useState('')
     let [rating, setRating] = useState(5)
+    let [message, setMessage] = useState('')
 
     const marks = [
         {
@@ -62,6 +63,7 @@ const CreateReply = () => {
                         <MenuItem value={type.name}>{type.name}</MenuItem>
                     })}
                 </Select>
+                <Divider className={classes.divider}/>
                 <Typography id="rating-slider" gutterBottom>Personality rating</Typography>
                 <Slider
                     defaultValue={5}
@@ -74,6 +76,8 @@ const CreateReply = () => {
                     marks={marks}
                     valueLabelDisplay="on"
                 />
+                <Divider className={classes.divider}/>
+                <TextField fullWidth rows={8} id="message" label="message" helperText="Enter the body of your reply here" onChange={(e) => setMessage(e.target.value)} />
             </Paper>
         </Container>
     )

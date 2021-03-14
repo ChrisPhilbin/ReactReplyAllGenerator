@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button'
 import Container from '@material-ui/core/Container'
 import Divider from '@material-ui/core/Divider'
 import FormHelperText from '@material-ui/core/FormHelperText'
+import Icon from '@material-ui/core/Icon'
 import InputLabel from '@material-ui/core/InputLabel'
 import { makeStyles } from '@material-ui/core/styles'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -13,6 +14,16 @@ import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 
 const useStyles = makeStyles((theme) => ({
+    root: {
+        '& > .fa': {
+          margin: theme.spacing(2),
+        },
+    },
+    addReplyButton: {
+        position: 'fixed',
+        right: 0,
+        bottom: 0
+    },
     divider: {
         margin: 15
     },
@@ -64,6 +75,10 @@ const ReplySelector = (props) => {
         window.prompt("Copy to clipboard: Ctrl+C, Enter", reply)
     }
 
+    const handleAddReply = () => {
+        alert("Handling add reply")
+    }
+
     let showReply
 
     if (isGenerated) { 
@@ -101,7 +116,8 @@ const ReplySelector = (props) => {
     return(
         <Container maxWidth="sm">
             <Paper elevation={3} className={classes.replyForm}>
-                <Typography align="center" variant="h3" gutterBottom>Craft your reply</Typography>
+                <Button variant="contained" color="primary" onClick={handleAddReply}>Add a reply</Button>
+                <Typography align="center" variant="h3" gutterBottom>Generate a reply</Typography>
 
                 <TextField fullWidth id="name" label="name" helperText="Who are you replying to?" onChange={(e) => setName(e.target.value)} />
                 <Divider className={classes.divider}/>
