@@ -1,9 +1,14 @@
 import React, { useState } from 'react'
 import Button from '@material-ui/core/Button'
 import Container from '@material-ui/core/Container'
+import CreateReply from './CreateReply'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
 import Divider from '@material-ui/core/Divider'
 import FormHelperText from '@material-ui/core/FormHelperText'
-import Icon from '@material-ui/core/Icon'
 import InputLabel from '@material-ui/core/InputLabel'
 import { makeStyles } from '@material-ui/core/styles'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -51,6 +56,7 @@ const ReplySelector = (props) => {
     let [name, setName]               = useState('')
     let [isGenerated, setIsGenerated] = useState(false)
     let [reply, setReply]             = useState('')
+    let [open, setOpen]               = useState(false)
 
     const marks = [
         {
@@ -75,8 +81,12 @@ const ReplySelector = (props) => {
         window.prompt("Copy to clipboard: Ctrl+C, Enter", reply)
     }
 
-    const handleAddReply = () => {
-        alert("Handling add reply")
+    const handleOpenDialog = () => {
+        setOpen(true)
+    }
+
+    const handleCloseDialog = () => {
+        setOpen(false)
     }
 
     let showReply
@@ -116,7 +126,21 @@ const ReplySelector = (props) => {
     return(
         <Container maxWidth="sm">
             <Paper elevation={3} className={classes.replyForm}>
-                <Button variant="contained" color="primary" onClick={handleAddReply}>Add a reply</Button>
+                <Button variant="contained" color="primary" onClick={handleOpenDialog}>Add a reply</Button>
+                <Dialog open={open} onClose={handleCloseDialog} aria-labelledby="form-dialog-title">
+                    <DialogTitle id="form-dialog-title">Add a reply</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            Add the body of your reply below. HINT: use <strong>{"{{first_name}}"}</strong> to automatically insert a name when generating your reply
+                        </DialogContentText>
+                        <CreateReply />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleCloseDialog} color="primary">
+                        Cancel
+                        </Button>
+                    </DialogActions>
+                </Dialog>
                 <Typography align="center" variant="h3" gutterBottom>Generate a reply</Typography>
 
                 <TextField fullWidth id="name" label="name" helperText="Who are you replying to?" onChange={(e) => setName(e.target.value)} />

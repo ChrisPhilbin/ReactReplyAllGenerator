@@ -3,6 +3,8 @@ import Button from '@material-ui/core/Button'
 import Container from '@material-ui/core/Container'
 import Divider from '@material-ui/core/Divider'
 import { makeStyles } from '@material-ui/core/styles'
+import MenuItem from '@material-ui/core/MenuItem'
+import Paper from '@material-ui/core/Paper'
 import Select from '@material-ui/core/Select'
 import Slider from '@material-ui/core/Slider'
 import TextField from '@material-ui/core/TextField'
@@ -49,7 +51,7 @@ const CreateReply = () => {
     }
 
     return(
-        <Container maxWidth={sm}>
+        <Container maxWidth="sm">
             <Paper elevation={3}>
                 <Typography align="center" variant="h3" gutterBottom>Add a new reply</Typography>
                 <Select
