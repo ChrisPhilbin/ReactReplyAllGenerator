@@ -47,12 +47,21 @@ const CreateReply = (props) => {
     const createNewReply = () => {
         let newReply = {
             message: message,
-            type: type,
             rating: rating,
-            createdAt: new Date()
+            type: type
         }
-        alert(newReply.message)
-        props.setOpen(false)
+        console.log(newReply, "new reply key/value pairs")
+        fetch('/replies', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newReply)
+        })
+        .then(response => response.json())
+        .then(data => console.log("success", data))
+        // alert(newReply.message)
+        // props.setOpen(false)
     }
 
     return(
