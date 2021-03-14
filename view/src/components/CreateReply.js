@@ -45,37 +45,45 @@ const CreateReply = (props) => {
         setRating(newValue)
     }
 
+    const createNewReply = () => {
+        let newReply = {
+            message: message,
+            type: type,
+            rating: rating,
+            createdAt: new Date()
+        }
+        alert(newReply.message)
+    }
+
     return(
         <Container maxWidth="sm">
-            <Paper elevation={3}>
-                <Typography align="center" variant="h3" gutterBottom>Add a new reply</Typography>
-                <Select
-                    fullWidth
-                    labelId="reply-type"
-                    id="reply-type"
-                    value={type}
-                    onChange={(e) => setType(e.target.value)}
-                >
-                    {types.map((type) => {
-                        <MenuItem value={type.name}>{type.name}</MenuItem>
-                    })}
-                </Select>
-                <Divider className={classes.divider}/>
-                <Typography id="rating-slider" gutterBottom>Personality rating</Typography>
-                <Slider
-                    defaultValue={5}
-                    value={rating}
-                    onChange={handleRatingChange}
-                    aria-labelledby="discrete-slider-always"
-                    step={1}
-                    max={10}
-                    min={1}
-                    marks={marks}
-                    valueLabelDisplay="on"
-                />
-                <Divider className={classes.divider}/>
-                <TextField fullWidth rows={8} id="message" label="message" helperText="Enter the body of your reply here" onChange={(e) => setMessage(e.target.value)} />
-            </Paper>
+            <Select
+                fullWidth
+                labelId="reply-type"
+                id="reply-type"
+                value={type}
+                onChange={(e) => setType(e.target.value)}
+            >
+                {types.map((type) => (
+                    <MenuItem value={type.name}>{type.name}</MenuItem>
+                ))}
+            </Select>
+            <Divider className={classes.divider}/>
+            <Typography id="rating-slider" gutterBottom>Personality rating</Typography>
+            <Slider
+                defaultValue={5}
+                value={rating}
+                onChange={handleRatingChange}
+                aria-labelledby="discrete-slider-always"
+                step={1}
+                max={10}
+                min={1}
+                marks={marks}
+                valueLabelDisplay="on"
+            />
+            <Divider className={classes.divider}/>
+            <TextField fullWidth multiline rows={8} id="message" label="message" helperText="Enter the body of your reply here" onChange={(e) => setMessage(e.target.value)} />
+            <Button variant="contained" color="primary" onClick={createNewReply}>Save reply</Button>
         </Container>
     )
 }
