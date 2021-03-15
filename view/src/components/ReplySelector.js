@@ -160,9 +160,9 @@ const ReplySelector = (props) => {
                     value={type}
                     onChange={(e) => setType(e.target.value)}
                 >
-                    <MenuItem value="promotion">Promotion</MenuItem>
-                    <MenuItem value="shoutout">Shout out</MenuItem>
-                    <MenuItem value="tip">Tip</MenuItem>
+                    {types.map((type) => (
+                        <MenuItem value={type.name} key={type.typeId}>{type.name}</MenuItem>
+                    ))}
                 </Select>
                 <FormHelperText>What kind of message are you replying to?</FormHelperText>
                 <Divider className={classes.divider} />
