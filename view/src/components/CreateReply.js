@@ -59,9 +59,9 @@ const CreateReply = (props) => {
             body: JSON.stringify(newReply)
         })
         .then(response => response.json())
-        .then(data => console.log("success", data))
-        // alert(newReply.message)
-        // props.setOpen(false)
+        .then(data => alert("New message created!", data.message))
+        .then(props.setOpen(false))
+        .catch(error => console.log("Error, something went wrong: ", error))
     }
 
     return(

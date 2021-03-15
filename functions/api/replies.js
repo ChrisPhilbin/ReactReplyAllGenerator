@@ -31,7 +31,8 @@ exports.createOneReply = (request, response) => {
         
     const newReply = {
         message: request.body.message,
-        rating: request.body.rating,
+		rating: request.body.rating,
+		type: request.body.type,
         createdAt: new Date().toISOString()
     }
     db

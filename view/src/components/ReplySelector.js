@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     generateButton: {
         padding: 10,
         marginTop: 35,
-        marginBottom: 35
+        marginBottom: 35,
     },
     replyForm: {
         padding: 20
