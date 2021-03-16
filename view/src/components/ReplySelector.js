@@ -106,6 +106,9 @@ const ReplySelector = (props) => {
                     defaultValue={reply}
                     disabled
                     fullWidth
+                    multiline
+                    rows={8}
+                    variant="outlined"
                 />
                 <Button onClick={copyToClipboard}>
                     Copy to clipboard
@@ -124,6 +127,7 @@ const ReplySelector = (props) => {
             let newReply = possibleReplies[Math.floor(Math.random()*possibleReplies.length)]
             let customizedMessage = newReply.message.replace("{{first_name}}", name)
             setReply(customizedMessage)
+            console.log(newReply, "new reply object")
             setIsGenerated(true)
         } else {
             alert("It looks like there isn't a reply that matches your criteria")
