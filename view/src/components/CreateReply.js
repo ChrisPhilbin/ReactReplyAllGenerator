@@ -59,7 +59,7 @@ const CreateReply = (props) => {
             body: JSON.stringify(newReply)
         })
         .then(response => response.json())
-        .then(data => alert("New message created!", data.message))
+        .then(data => console.log(data, "data from response"))
         .then(props.setOpen(false))
         .catch(error => console.log("Error, something went wrong: ", error))
     }
@@ -74,7 +74,7 @@ const CreateReply = (props) => {
                 onChange={(e) => setType(e.target.value)}
             >
                 {types.map((type) => (
-                    <MenuItem value={type.name}>{type.name}</MenuItem>
+                    <MenuItem value={type.name} key={type.typeId}>{type.name}</MenuItem>
                 ))}
             </Select>
             <Divider className={classes.divider}/>

@@ -118,7 +118,7 @@ const ReplySelector = (props) => {
 
     const generateReply = () => {
         let possibleReplies = replies.filter( (reply) => {
-            return reply.rating === rating && reply.type === type
+            return reply.rating === rating && reply.type.toLowerCase() === type.toLowerCase()
         })
         if (possibleReplies.length) {
             let newReply = possibleReplies[Math.floor(Math.random()*possibleReplies.length)]

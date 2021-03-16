@@ -11,6 +11,8 @@ const App = () => {
       .then(data => setReplies(data))
   }, [])
 
+  console.log(replies)
+
   return(
     <div>
       <ReplySelector replies={replies}/>
