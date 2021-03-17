@@ -114,7 +114,7 @@ const ReplySelector = (props) => {
             <>
                 <TextField
                     className={classes.replyText}
-                    defaultValue={reply}
+                    value={reply}
                     disabled
                     fullWidth
                     multiline
