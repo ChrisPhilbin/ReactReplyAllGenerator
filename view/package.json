@@ -37,5 +37,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://us-central1-replyallgenerator.cloudfunctions.net/api"
+  "proxy": "https://sleepy-plateau-48238.herokuapp.com/"
 }

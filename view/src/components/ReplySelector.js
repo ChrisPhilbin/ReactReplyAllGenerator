@@ -71,9 +71,15 @@ const ReplySelector = (props) => {
     let [types, setTypes]             = useState([])
 
     useEffect(() => {
-        fetch('/types')
+        fetch('https://sleepy-plateau-48238.herokuapp.com/https://us-central1-replyallgenerator.cloudfunctions.net/api/types', {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
         .then(response => response.json())
         .then(data => setTypes(data))
+        .catch(error => console.log(error, "Something went wrong when fetching all type objects"))
     }, [])
 
     const marks = [
@@ -138,7 +144,6 @@ const ReplySelector = (props) => {
             let newReply = possibleReplies[Math.floor(Math.random()*possibleReplies.length)]
             let customizedMessage = newReply.message.replace("{{first_name}}", name)
             setReply(customizedMessage)
-            console.log(newReply, "new reply object")
             setIsGenerated(true)
         } else {
             alert("It looks like there isn't a reply that matches your criteria")
