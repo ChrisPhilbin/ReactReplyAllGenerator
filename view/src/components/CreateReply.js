@@ -50,7 +50,7 @@ const CreateReply = (props) => {
             rating: rating,
             type: type
         }
-        fetch('https://sleepy-plateau-48238.herokuapp.com/https://us-central1-replyallgenerator.cloudfunctions.net/api/replies', {
+        fetch(process.env.REACT_APP_CORS + '/replies', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -59,6 +59,7 @@ const CreateReply = (props) => {
         })
         .then(response => response.json())
         .then(props.setOpen(false))
+        .then(props.setReplies([...props.replies, newReply]))
         .catch(error => console.log("Error, something went wrong: ", error))
     }
 

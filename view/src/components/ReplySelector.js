@@ -56,12 +56,11 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const ReplySelector = (props) => {
+const ReplySelector = () => {
 
     const classes = useStyles();
 
-    let replies = props.replies
-
+    let [replies, setReplies]         = useState('')
     let [rating, setRating]           = useState(5)
     let [type, setType]               = useState('')
     let [name, setName]               = useState('')
@@ -71,7 +70,7 @@ const ReplySelector = (props) => {
     let [types, setTypes]             = useState([])
 
     useEffect(() => {
-        fetch('https://sleepy-plateau-48238.herokuapp.com/https://us-central1-replyallgenerator.cloudfunctions.net/api/types', {
+        fetch(process.env.REACT_APP_CORS + '/types', {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
@@ -81,6 +80,18 @@ const ReplySelector = (props) => {
         .then(data => setTypes(data))
         .catch(error => console.log(error, "Something went wrong when fetching all type objects"))
     }, [])
+
+    useEffect(() => {
+        fetch(process.env.REACT_APP_CORS + '/replies', {
+          headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(data => setReplies(data))
+          .catch(error => console.log(error, "Something went wrong when fetching all reply objects"))
+      }, [])
 
     const marks = [
         {
@@ -168,7 +179,7 @@ const ReplySelector = (props) => {
                             <DialogContentText>
                                 Add the body of your reply below. HINT: use <strong>{"{{first_name}}"}</strong> to automatically insert a name when generating your reply
                             </DialogContentText>
-                            <CreateReply types={types} setOpen={setOpen}/>
+                            <CreateReply types={types} setOpen={setOpen} replies={replies} setReplies={setReplies}/>
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={handleCloseDialog} color="primary">
