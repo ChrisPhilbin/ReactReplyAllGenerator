@@ -17,4 +17,14 @@ const {
 
 app.get('/types', getAllTypes)
 
+const {
+    loginUser,
+    signUpUser,
+    getUserDetail
+} = require('./api/users')
+
+app.post('/login', loginUser)
+app.post('/signup', signUpUser)
+app.get('/user', getUserDetail)
+
 exports.api = functions.https.onRequest(app)
