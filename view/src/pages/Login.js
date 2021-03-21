@@ -43,14 +43,14 @@ const Login = (props) => {
 
     const { classes } = props
 
-    let [username, setUsername] = useState('')
+    let [email, setEmail] = useState('')
     let [password, setPassword] = useState('')
     let [errors, setErrors]       = useState('')
 
     const handleSubmit = (event) => {
         event.preventDefault()
         let userData = {
-            username: username,
+            email: email,
             password: password
         }
         fetch('/post', {
@@ -62,8 +62,8 @@ const Login = (props) => {
             props.history.push('/');
         })
         .catch(error => {
-            setErrors(errors)
-            console.log(errors, "something went wrong")
+            setErrors(error)
+            console.log(error, "something went wrong")
         })
     }
 
