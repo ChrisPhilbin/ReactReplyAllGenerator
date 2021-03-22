@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     divider: {
         margin: 15
     },
-    floatingRightButton: {
+    floatingButton: {
 		position: 'absolute',
 		bottom: 0,
 		right: 0
