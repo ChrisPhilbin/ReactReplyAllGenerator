@@ -43,27 +43,37 @@ const Login = (props) => {
 
     const { classes } = props
 
-    let [email, setEmail] = useState('')
-    let [password, setPassword] = useState('')
+    let [email, setEmail]         = useState('')
+    let [password, setPassword]   = useState('')
     let [errors, setErrors]       = useState('')
+    let [loading, setLoading]     = useState(false)
 
     const handleSubmit = (event) => {
         event.preventDefault()
+        setLoading(true)
         let userData = {
             email: email,
             password: password
         }
-        fetch('/post', {
+        fetch(process.env.REACT_APP_CORS + '/login', {
             method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
             body: JSON.stringify(userData)
         })
-        .then((response) => {
-            localStorage.setItem('AuthToken', `Bearer ${response.data.token}`);
+        .then(response => response.json())
+        .then(data => {
+            console.log(data, "response from fetch POST")
+            localStorage.setItem('AuthToken', `Bearer ${data.token}`)
+            setLoading(false)
             props.history.push('/');
         })
         .catch(error => {
             setErrors(error)
             console.log(error, "something went wrong")
+            setLoading(false)
         })
     }
 
