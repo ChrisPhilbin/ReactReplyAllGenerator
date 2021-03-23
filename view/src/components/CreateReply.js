@@ -45,6 +45,8 @@ const CreateReply = (props) => {
     }
 
     const createNewReply = () => {
+        const authToken = localStorage.getItem('AuthToken')
+
         let newReply = {
             message: message,
             rating: rating,
@@ -52,6 +54,7 @@ const CreateReply = (props) => {
         }
         fetch(process.env.REACT_APP_CORS + '/replies', {
             method: 'POST',
+            Authorization: `${authToken}`,
             headers: {
                 'Content-Type': 'application/json',
             },
