@@ -20,6 +20,8 @@ import Slider from '@material-ui/core/Slider'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 
+import { authMiddleWare } from '../util/Auth'
+
 const useStyles = makeStyles((theme) => ({
     root: {
         '& > .fa': {
@@ -56,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const ReplySelector = () => {
+const ReplySelector = (props) => {
 
     const classes = useStyles();
 
@@ -70,6 +72,7 @@ const ReplySelector = () => {
     let [types, setTypes]             = useState([])
 
     useEffect(() => {
+        authMiddleWare(props.history)
         fetch(process.env.REACT_APP_CORS + '/types', {
             headers: {
                 'Content-Type': 'application/json',
