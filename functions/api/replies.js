@@ -52,3 +52,24 @@ exports.createOneReply = (request, response) => {
 			});
 	})
 };
+
+exports.deleteOneReply = (request, response) => {
+	cors(request, response, () => {
+		if (request.body.message.trim() === '') {
+			return response.status(400).json({ message: 'Must not be empty' });
+		}
+		db
+			.collection('replies')
+			.doc(request.body.replyId)
+			.delete()
+			.then((doc) => {
+				return response.json(doc)
+			})
+			.catch((err) => {
+				response.status(500).json({ error: 'something went wrong' })
+				console.log(err)
+			})
+
+	})
+
+}

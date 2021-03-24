@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import Container from '@material-ui/core/Container'
 import { makeStyles } from '@material-ui/core/styles'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -32,7 +33,7 @@ const DisplayAllReplies = (props) => {
         fetch(process.env.REACT_APP_CORS + '/replies')
         .then(response => response.json())
         .then(data => {
-            setReplies([...replies, data])
+            setReplies(data)
             setLoading(false)
         })
         .catch(error => {
@@ -42,42 +43,44 @@ const DisplayAllReplies = (props) => {
 
     }, [])
 
-    let replyTable = null
-
-    if (replies.length !== 0) {
-        replyTable = (
+    if (replies.length !== 0 && loading === false) {
+        return( 
             <>
-            <TableContainer component={Paper}>
-                <Table className={classes.table} aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Body of reply</TableCell>
-                            <TableCell align="right">Type of reply</TableCell>
-                            <TableCell align="right">Personality score</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {replies.map((reply) => (
-                            <TableRow key={reply.replyId}>
-                                <TableCell component="th" scope="row">
-                                    {reply.message}
-                                </TableCell>
-                                <TableCell align="right">{reply.type}</TableCell>
-                                <TableCell align="right">{reply.rating}</TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+                <Container maxWidth="lg">
+                    <TableContainer component={Paper}>
+                        <Table className={classes.table} aria-label="simple table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Body of reply</TableCell>
+                                    <TableCell align="right">Type of reply</TableCell>
+                                    <TableCell align="right">Personality score</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {replies.map((reply) => (
+                                    <TableRow key={reply.replyId}>
+                                        <TableCell component="th" scope="row">
+                                            {reply.message}
+                                        </TableCell>
+                                        <TableCell align="right">{reply.type}</TableCell>
+                                        <TableCell align="right">{reply.rating}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Container>
+            </>
+        )
+    } else {
+        return(
+            <>
+                <div>
+                    Loading... hang tight...
+                </div>
             </>
         )
     }
-
-    return(
-        <main className={classes.content}>
-            {replies.length? {replyTable} : <div>Nothing yet...</div>}
-        </main>
-    )
 }
 
 export default DisplayAllReplies
