@@ -9,6 +9,8 @@ import Slider from '@material-ui/core/Slider'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 
+import axios from 'axios'
+
 const useStyles = makeStyles((theme) => ({
     divider: {
         margin: 15
@@ -44,26 +46,46 @@ const CreateReply = (props) => {
         setRating(newValue)
     }
 
-    const createNewReply = () => {
-        const authToken = localStorage.getItem('AuthToken')
+    const createNewReply = (event) => {
+        event.preventDefault()
+        // const authToken = localStorage.getItem('AuthToken')
 
         let newReply = {
             message: message,
             rating: rating,
             type: type
         }
-        fetch(process.env.REACT_APP_CORS + '/replies', {
-            method: 'POST',
-            Authorization: `${authToken}`,
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(newReply)
-        })
-        .then(response => response.json())
-        .then(props.setOpen(false))
-        .then(props.setReplies([...props.replies, newReply]))
-        .catch(error => console.log("Error, something went wrong: ", error))
+
+        let options = {
+            url: `https://sleepy-plateau-48238.herokuapp.com/https://us-central1-replyallgenerator.cloudfunctions.net/api/replies`,
+            method: 'post',
+            data: newReply
+        }
+        const authToken = localStorage.getItem('AuthToken');
+        axios.defaults.headers.common = { Authorization: `${authToken}` };
+        axios(options)
+            .then((response) => {
+                console.log(response, "response from axios")
+                props.setOpen(false)
+                props.setReplies([...props.replies, newReply])
+            })
+            .catch((error) => {
+                props.setOpen(true)
+                console.log(error);
+            })
+
+        // fetch(process.env.REACT_APP_CORS + '/replies', {
+        //     method: 'POST',
+        //     credentials: 'include',
+        //     headers: {
+        //         'Authorization': `${authToken}`
+        //     },
+        //     body: JSON.stringify(newReply)
+        // })
+        // .then(response => response.json())
+        // .then(props.setOpen(false))
+        // .then(props.setReplies([...props.replies, newReply]))
+        // .catch(error => console.log("Error, something went wrong: ", error))
     }
 
     return(

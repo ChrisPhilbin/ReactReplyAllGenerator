@@ -1,5 +1,7 @@
 const { db } = require('../util/admin')
 
+const cors = require('cors')({origin: true})
+
 exports.getAllReplies = (request, response) => {
 	db
 		.collection('replies')
@@ -25,26 +27,28 @@ exports.getAllReplies = (request, response) => {
 }
 
 exports.createOneReply = (request, response) => {
-	if (request.body.message.trim() === '') {
-		return response.status(400).json({ message: 'Must not be empty' });
-    }
-        
-    const newReply = {
-        message: request.body.message,
-		rating: request.body.rating,
-		type: request.body.type,
-        createdAt: new Date().toISOString()
-    }
-    db
-        .collection('replies')
-        .add(newReply)
-        .then((doc)=>{
-            const responseReply = newReply;
-            responseReply.id = doc.id;
-            return response.json(responseReply);
-        })
-        .catch((err) => {
-			response.status(500).json({ error: 'Something went wrong' });
-			console.error(err);
-		});
+	cors(request, response, () => {
+		if (request.body.message.trim() === '') {
+			return response.status(400).json({ message: 'Must not be empty' });
+		}
+			
+		const newReply = {
+			message: request.body.message,
+			rating: request.body.rating,
+			type: request.body.type,
+			createdAt: new Date().toISOString()
+		}
+		db
+			.collection('replies')
+			.add(newReply)
+			.then((doc)=>{
+				const responseReply = newReply;
+				responseReply.id = doc.id;
+				return response.json(responseReply);
+			})
+			.catch((err) => {
+				response.status(500).json({ error: 'Something went wrong' });
+				console.error(err);
+			});
+	})
 };
