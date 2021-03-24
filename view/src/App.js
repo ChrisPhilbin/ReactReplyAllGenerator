@@ -2,7 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Login from './pages/Login'
 import ReplySelector from './components/ReplySelector'
-import Signup from './pages/Signup'
+import SignUp from './pages/Signup'
 
 const App = () => {
 
@@ -12,7 +12,7 @@ const App = () => {
         <Switch>
           <Route exact path="/"       component={ReplySelector} />
           <Route exact path="/login"  component={Login} />
-          <Route exact path="/signup" component={Signup} />
+          <Route exact path="/signup" component={SignUp} />
         </Switch>
       </div>
     </Router>
