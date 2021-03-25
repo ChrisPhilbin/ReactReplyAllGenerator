@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import Button from '@material-ui/core/Button'
 import Container from '@material-ui/core/Container'
 import { makeStyles } from '@material-ui/core/styles'
 import Table from '@material-ui/core/Table'
@@ -9,6 +10,7 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 import { authMiddleWare} from '../util/Auth'
+import axios from 'axios'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -45,23 +47,50 @@ const DisplayAllReplies = (props) => {
     }, [])
 
     const handleDelete = (replyId) => {
-        authMiddleWare(props.history)
-        let deleteReply = {
-            replyId: replyId
+        if (window.confirm("Are you sure?")) {
+            authMiddleWare(props.history)
+            let deleteReply = {
+                replyId: replyId
+            }
+
+            let options = {
+                url: `https://sleepy-plateau-48238.herokuapp.com/https://us-central1-replyallgenerator.cloudfunctions.net/api/replies/${replyId}`,
+                method: 'delete',
+                data: deleteReply
+            }
+            const authToken = localStorage.getItem('AuthToken');
+            axios.defaults.headers.common = { Authorization: `${authToken}` };
+            axios(options)
+                .then((response) => {
+                    console.log(response, "response from axios")
+                    alert("Reply deleted!")
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
         }
-        const authToken = localStorage.getItem('AuthToken');
-        fetch(process.env.REACT_APP_CORS + '/replies/' + replyId, {
-            method: 'post',
-            credentials: 'include',
-            headers: {
-                Authorization: `${authToken}`
-            },
-            body: JSON.stringify(deleteReply)
-        })
-        .then(response => response.json())
-        .then(data => alert("Removed reply!"))
-        .catch(error => console.log("Something went wrong:", error))
     }
+
+    // const handleDelete = (replyId) => {
+    //     if (window.confirm("Are you sure?")) {
+    //         authMiddleWare(props.history)
+    //         let deleteReply = {
+    //             replyId: replyId
+    //         }
+    //         const authToken = localStorage.getItem('AuthToken');
+    //         fetch(process.env.REACT_APP_CORS + '/replies/' + replyId, {
+    //             method: 'post',
+    //             credentials: 'include',
+    //             headers: {
+    //                 Authorization: `${authToken}`
+    //             },
+    //             body: JSON.stringify(deleteReply)
+    //         })
+    //         .then(response => response.json())
+    //         .then(data => alert("Removed reply!"))
+    //         .catch(error => console.log("Something went wrong:", error))
+    //     }
+    // }
 
     if (replies.length !== 0 && loading === false) {
         return( 
@@ -74,6 +103,7 @@ const DisplayAllReplies = (props) => {
                                     <TableCell>Body of reply</TableCell>
                                     <TableCell align="right">Type of reply</TableCell>
                                     <TableCell align="right">Personality score</TableCell>
+                                    <TableCell align="right">Delete?</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -84,6 +114,9 @@ const DisplayAllReplies = (props) => {
                                         </TableCell>
                                         <TableCell align="right">{reply.type}</TableCell>
                                         <TableCell align="right">{reply.rating}</TableCell>
+                                        <TableCell align="right">
+                                            <Button variant="contained" color="primary" onClick={() => handleDelete(reply.replyId)}>Remove</Button>
+                                        </TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
