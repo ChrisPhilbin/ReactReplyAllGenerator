@@ -63,7 +63,7 @@ exports.deleteOneReply = (request, response) => {
 			.doc(request.body.replyId)
 			.delete()
 			.then((doc) => {
-				return response.json(doc)
+				return response.json(request.body.replyId)
 			})
 			.catch((err) => {
 				response.status(500).json({ error: 'something went wrong' })

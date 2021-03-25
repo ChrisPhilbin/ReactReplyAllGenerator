@@ -62,35 +62,16 @@ const DisplayAllReplies = (props) => {
             axios.defaults.headers.common = { Authorization: `${authToken}` };
             axios(options)
                 .then((response) => {
-                    console.log(response, "response from axios")
-                    alert("Reply deleted!")
+                    if (response.status === 200) {
+                        alert("Reply deleted!")
+                        setReplies(replies.filter(reply => reply.replyId !== response.data))
+                    }
                 })
                 .catch((error) => {
                     console.log(error);
                 })
         }
     }
-
-    // const handleDelete = (replyId) => {
-    //     if (window.confirm("Are you sure?")) {
-    //         authMiddleWare(props.history)
-    //         let deleteReply = {
-    //             replyId: replyId
-    //         }
-    //         const authToken = localStorage.getItem('AuthToken');
-    //         fetch(process.env.REACT_APP_CORS + '/replies/' + replyId, {
-    //             method: 'post',
-    //             credentials: 'include',
-    //             headers: {
-    //                 Authorization: `${authToken}`
-    //             },
-    //             body: JSON.stringify(deleteReply)
-    //         })
-    //         .then(response => response.json())
-    //         .then(data => alert("Removed reply!"))
-    //         .catch(error => console.log("Something went wrong:", error))
-    //     }
-    // }
 
     if (replies.length !== 0 && loading === false) {
         return( 
