@@ -8,6 +8,7 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
+import { authMiddleWare} from '../util/Auth'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -44,13 +45,22 @@ const DisplayAllReplies = (props) => {
     }, [])
 
     const handleDelete = (replyId) => {
-        fetch(process.env.REACT_APP_CORS + '/replies/' + replyId, {
-            method: post,
-            credentials: include,
-            headers: {
-                Authorization: 
-            }
+        authMiddleWare(props.history)
+        let deleteReply = {
+            replyId: replyId
         }
+        const authToken = localStorage.getItem('AuthToken');
+        fetch(process.env.REACT_APP_CORS + '/replies/' + replyId, {
+            method: 'post',
+            credentials: 'include',
+            headers: {
+                Authorization: `${authToken}`
+            },
+            body: JSON.stringify(deleteReply)
+        })
+        .then(response => response.json())
+        .then(data => alert("Removed reply!"))
+        .catch(error => console.log("Something went wrong:", error))
     }
 
     if (replies.length !== 0 && loading === false) {
