@@ -55,8 +55,8 @@ exports.createOneReply = (request, response) => {
 
 exports.deleteOneReply = (request, response) => {
 	cors(request, response, () => {
-		if (request.body.message.trim() === '') {
-			return response.status(400).json({ message: 'Must not be empty' });
+		if (request.body.replyId.trim() === '') {
+			return response.status(400).json({ replyId: 'Must not be empty' });
 		}
 		db
 			.collection('replies')

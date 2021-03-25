@@ -43,6 +43,16 @@ const DisplayAllReplies = (props) => {
 
     }, [])
 
+    const handleDelete = (replyId) => {
+        fetch(process.env.REACT_APP_CORS + '/replies/' + replyId, {
+            method: post,
+            credentials: include,
+            headers: {
+                Authorization: 
+            }
+        }
+    }
+
     if (replies.length !== 0 && loading === false) {
         return( 
             <>
