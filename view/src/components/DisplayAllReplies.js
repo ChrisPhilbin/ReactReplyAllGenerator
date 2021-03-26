@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Button from '@material-ui/core/Button'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import Container from '@material-ui/core/Container'
 import { makeStyles } from '@material-ui/core/styles'
 import Table from '@material-ui/core/Table'
@@ -14,12 +15,23 @@ import axios from 'axios'
 
 
 const useStyles = makeStyles((theme) => ({
+    root: {
+		display: 'flex'
+	},
     content: {
         flexGrow: 1,
         padding: theme.spacing(3),
     },
     table: {
         minWidth: 650
+    },
+    uiProgress: {
+        position: 'absolute',
+		zIndex: '1000',
+		height: '31px',
+		width: '31px',
+		left: '50%',
+		top: '35%'
     }
 }))
 
@@ -68,7 +80,11 @@ const DisplayAllReplies = (props) => {
                     }
                 })
                 .catch((error) => {
-                    console.log(error);
+                    if (error.response.status === 403) {
+                        console.log(error)
+                        alert("You must be logged in!")
+                        props.history.push('/login')
+                    }
                 })
         }
     }
@@ -108,11 +124,11 @@ const DisplayAllReplies = (props) => {
         )
     } else {
         return(
-            <>
-                <div>
-                    Loading... hang tight...
+            <Container maxWidth="lg">
+                <div className={classes.root}>
+                    <CircularProgress size={150} className={classes.uiProgess} />
                 </div>
-            </>
+            </Container>
         )
     }
 }

@@ -48,7 +48,6 @@ const CreateReply = (props) => {
 
     const createNewReply = (event) => {
         event.preventDefault()
-        // const authToken = localStorage.getItem('AuthToken')
 
         let newReply = {
             message: message,
@@ -65,9 +64,11 @@ const CreateReply = (props) => {
         axios.defaults.headers.common = { Authorization: `${authToken}` };
         axios(options)
             .then((response) => {
-                console.log(response, "response from axios")
-                props.setOpen(false)
-                props.setReplies([...props.replies, newReply])
+                if (response.status === 200) {
+                    alert("Reply successfully saved!")
+                    props.setOpen(false)
+                    props.setReplies([...props.replies, newReply])
+                }
             })
             .catch((error) => {
                 props.setOpen(true)

@@ -9,14 +9,12 @@ const App = () => {
 
   return(
     <Router>
-      <div>
         <Switch>
           <Route exact path="/"        component={ReplySelector} />
           <Route exact path="/login"   component={Login} />
           <Route exact path="/replies" component={DisplayAllReplies} />
           <Route exact path="/signup"  component={SignUp} />
         </Switch>
-      </div>
     </Router>
   )
 }
