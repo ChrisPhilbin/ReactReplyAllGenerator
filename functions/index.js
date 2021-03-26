@@ -21,6 +21,7 @@ app.get('/types', getAllTypes)
 
 const {
     loginUser,
+    signOutUser,
     signUpUser,
     getUserDetail
 } = require('./api/users')
@@ -28,5 +29,6 @@ const {
 app.post('/login', loginUser)
 app.post('/signup', signUpUser)
 app.get('/user', getUserDetail)
+app.delete('/signout', signOutUser)
 
 exports.api = functions.https.onRequest(app)
