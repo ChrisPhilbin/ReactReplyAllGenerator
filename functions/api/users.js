@@ -30,7 +30,16 @@ exports.loginUser = (request, response) => {
             console.error(error);
             return response.status(403).json({ general: 'wrong credentials, please try again'});
         })
-};
+}
+
+exports.signOutUser = (request, response) => {
+    firebase.auth().signOut().then(() => {
+        return response.json({ success })
+      }).catch((error) => {
+        console.log(error)
+        return response.status(400).json({ error: 'something went wrong'})
+      });
+}
 
 exports.signUpUser = (request, response) => {
     const newUser = {
@@ -107,16 +116,4 @@ exports.getUserDetail = (request, response) => {
 		});
 }
 
-// exports.updateUserDetails = (request, response) => {
-//     let document = db.collection('users').doc(`${request.user.username}`);
-//     document.update(request.body)
-//     .then(()=> {
-//         response.json({message: 'Updated successfully'});
-//     })
-//     .catch((error) => {
-//         console.error(error);
-//         return response.status(500).json({ 
-//             message: "Cannot Update the value"
-//         });
-//     });
-// }
+
