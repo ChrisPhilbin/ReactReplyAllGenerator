@@ -9,6 +9,7 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Divider from '@material-ui/core/Divider'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import FormHelperText from '@material-ui/core/FormHelperText'
 import IconButton from '@material-ui/core/IconButton'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -40,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     divider: {
         margin: 15
     },
-    floatingButton: {
+    floatingButtons: {
 		position: 'absolute',
 		bottom: 0,
 		right: 0
@@ -127,6 +128,13 @@ const ReplySelector = (props) => {
         setOpen(false)
     }
 
+    const logoutHandler = (event) => {
+        if (window.confirm("Are you sure?")) {
+            localStorage.removeItem('AuthToken')
+            props.history.push('/login')
+        }
+    }
+    
     let showReply
 
     if (isGenerated) { 
@@ -166,14 +174,22 @@ const ReplySelector = (props) => {
 
     return(
         <main className={classes.content}>
-            <IconButton
-                className={classes.floatingButton}
-                color="primary"
-                aria-label="Add a new reply"
-                onClick={handleOpenDialog}
-            >
-                <AddCircleIcon style={{ fontSize: 60 }} />
-            </IconButton>
+            <div className={classes.floatingButtons}>
+                <IconButton
+                    color="primary"
+                    aria-label="Add a new reply"
+                    onClick={handleOpenDialog}
+                >
+                    <AddCircleIcon style={{ fontSize: 60 }} />
+                </IconButton>
+                <IconButton    
+                    color="primary"
+                    aria-label="Logout"
+                    onClick={logoutHandler}
+                >
+                    <ExitToAppIcon style={{ fontSize: 60 }} />
+                </IconButton>
+            </div>
             <Container maxWidth="sm">
                 <Paper variant="outlined" elevation={3} className={classes.replyForm}>
                     <Dialog open={open} onClose={handleCloseDialog} aria-labelledby="form-dialog-title">
