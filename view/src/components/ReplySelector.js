@@ -22,6 +22,7 @@ import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 
 import { authMiddleWare } from '../util/Auth'
+import axios from 'axios'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -130,8 +131,21 @@ const ReplySelector = (props) => {
 
     const logoutHandler = (event) => {
         if (window.confirm("Are you sure?")) {
-            localStorage.removeItem('AuthToken')
-            props.history.push('/login')
+            let options = {
+                url: `${process.env.REACT_APP_CORS}/signout`,
+                method: 'delete'
+            }
+            console.log(options.url, "url")
+            axios(options)
+            .then((response) => {
+                if (response.status === 200) {
+                    localStorage.removeItem('AuthToken')
+                    props.history.push('/login')
+                }
+            })
+            .catch((error) => {
+                console.log(error, "Something went wrong!")
+            })
         }
     }
     

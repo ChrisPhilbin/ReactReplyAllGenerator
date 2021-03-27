@@ -34,7 +34,7 @@ exports.loginUser = (request, response) => {
 
 exports.signOutUser = (request, response) => {
     firebase.auth().signOut().then(() => {
-        return response.json({ success })
+        return response.status(200).json({response: 'Success!'})
       }).catch((error) => {
         console.log(error)
         return response.status(400).json({ error: 'something went wrong'})
