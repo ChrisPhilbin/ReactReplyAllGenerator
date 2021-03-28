@@ -135,7 +135,6 @@ const ReplySelector = (props) => {
                 url: `${process.env.REACT_APP_CORS}/signout`,
                 method: 'delete'
             }
-            console.log(options.url, "url")
             axios(options)
             .then((response) => {
                 if (response.status === 200) {
@@ -207,10 +206,10 @@ const ReplySelector = (props) => {
             <Container maxWidth="sm">
                 <Paper variant="outlined" elevation={3} className={classes.replyForm}>
                     <Dialog open={open} onClose={handleCloseDialog} aria-labelledby="form-dialog-title">
-                        <DialogTitle id="form-dialog-title">Add a reply</DialogTitle>
+                        <DialogTitle id="form-dialog-title">Edit reply</DialogTitle>
                         <DialogContent>
                             <DialogContentText>
-                                Add the body of your reply below. HINT: use <strong>{"{{first_name}}"}</strong> to automatically insert a name when generating your reply
+                                Edit the body of the reply below. HINT: use <strong>{"{{first_name}}"}</strong> to automatically insert a name when generating your reply
                             </DialogContentText>
                             <CreateReply types={types} setOpen={setOpen} replies={replies} setReplies={setReplies}/>
                         </DialogContent>
