@@ -2,6 +2,12 @@ import React, { useEffect, useState } from 'react'
 import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Container from '@material-ui/core/Container'
+import CreateReply from './CreateReply'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
 import { makeStyles } from '@material-ui/core/styles'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -43,6 +49,9 @@ const DisplayAllReplies = (props) => {
     let [replies, setReplies] = useState([])
     let [loading, setLoading] = useState(false)
     let [errors, setErrors]   = useState('')
+    let [open, setOpen]       = useState(false)
+    let [types, setTypes]     = useState([])
+    let [reply, setReply]     = useState({})
 
     useEffect(() => {
         setLoading(true)
@@ -56,7 +65,6 @@ const DisplayAllReplies = (props) => {
             setErrors(error)
             console.log(error, "something went wrong")
         })
-
     }, [])
 
     const handleDelete = (replyId) => {
@@ -91,28 +99,28 @@ const DisplayAllReplies = (props) => {
     }
 
     const handleUpdate = (reply) => {
-        alert("Updating!")
+        setReply(reply)
+        setOpen(true)
     }
 
     if (replies.length !== 0 && loading === false) {
         return( 
             <>
                 <Container maxWidth="lg">
-                    <Dialog open={open} onClose={handleCloseDialog} aria-labelledby="form-dialog-title">
+                    <Dialog open={open} onClose={setOpen(false)} aria-labelledby="form-dialog-title">
                         <DialogTitle id="form-dialog-title">Add a reply</DialogTitle>
                         <DialogContent>
                             <DialogContentText>
                                 Add the body of your reply below. HINT: use <strong>{"{{first_name}}"}</strong> to automatically insert a name when generating your reply
                             </DialogContentText>
-                            <CreateReply types={types} setOpen={setOpen} replies={replies} setReplies={setReplies}/>
+                            <CreateReply reply={reply} types={types} setOpen={setOpen} replies={replies} setReplies={setReplies}/>
                         </DialogContent>
                         <DialogActions>
-                            <Button onClick={handleCloseDialog} color="primary">
+                            <Button onClick={setOpen(false)} color="primary">
                             Cancel
                             </Button>
                         </DialogActions>
                     </Dialog>
-
                     <TableContainer component={Paper}>
                         <Table className={classes.table} aria-label="simple table">
                             <TableHead>
