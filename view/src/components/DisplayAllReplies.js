@@ -107,7 +107,7 @@ const DisplayAllReplies = (props) => {
         return( 
             <>
                 <Container maxWidth="lg">
-                    <Dialog open={open} onClose={setOpen(false)} aria-labelledby="form-dialog-title">
+                    <Dialog open={open} onClose={() => setOpen(false)} aria-labelledby="form-dialog-title">
                         <DialogTitle id="form-dialog-title">Add a reply</DialogTitle>
                         <DialogContent>
                             <DialogContentText>
@@ -116,7 +116,7 @@ const DisplayAllReplies = (props) => {
                             <CreateReply reply={reply} types={types} setOpen={setOpen} replies={replies} setReplies={setReplies}/>
                         </DialogContent>
                         <DialogActions>
-                            <Button onClick={setOpen(false)} color="primary">
+                            <Button onClick={() => setOpen(false)} color="primary">
                             Cancel
                             </Button>
                         </DialogActions>
