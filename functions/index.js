@@ -4,13 +4,15 @@ const auth = require('./util/auth');
 
 
 const {
-    getAllReplies,
     createOneReply,
-    deleteOneReply
+    deleteOneReply,
+    editReply,
+    getAllReplies
 } = require('./api/replies')
 
 app.get('/replies', getAllReplies)
 app.post('/replies', auth, createOneReply)
+app.put('/replies/:replyId', auth, editReply)
 app.delete('/replies/:replyId', auth, deleteOneReply)
 
 const { 

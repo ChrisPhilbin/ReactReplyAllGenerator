@@ -51,7 +51,27 @@ exports.createOneReply = (request, response) => {
 				console.error(err);
 			});
 	})
-};
+}
+
+exports.editReply = (request, response) => {
+	if (request.body.message.trim() === '') {
+		return response.status(403).json({ message: 'Must not be empty' });
+	}
+	if(request.body.replyId || request.body.createdAt){
+        response.status(403).json({message: 'Not allowed to edit'});
+    }
+	let document = db.collection('replies').doc(`${request.params.replyId}`);
+    document.update(request.body)
+    .then(()=> {
+        response.json({message: 'Updated successfully'});
+    })
+    .catch((err) => {
+        console.error(err);
+        return response.status(500).json({ 
+                error: err.code 
+        });
+    });
+}
 
 exports.deleteOneReply = (request, response) => {
 	cors(request, response, () => {
