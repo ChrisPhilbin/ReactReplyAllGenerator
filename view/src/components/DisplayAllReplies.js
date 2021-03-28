@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Container from '@material-ui/core/Container'
-import CreateReply from './CreateReply'
+import EditReply from './EditReply'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
@@ -113,7 +113,7 @@ const DisplayAllReplies = (props) => {
                             <DialogContentText>
                                 Add the body of your reply below. HINT: use <strong>{"{{first_name}}"}</strong> to automatically insert a name when generating your reply
                             </DialogContentText>
-                            <CreateReply reply={reply} types={types} setOpen={setOpen} replies={replies} setReplies={setReplies}/>
+                            <EditReply reply={reply} types={types} setOpen={setOpen} replies={replies} setReplies={setReplies}/>
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={() => setOpen(false)} color="primary">
