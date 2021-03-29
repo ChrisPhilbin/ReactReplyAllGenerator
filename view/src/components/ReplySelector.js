@@ -20,6 +20,7 @@ import Select from '@material-ui/core/Select'
 import Slider from '@material-ui/core/Slider'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
+import ViewListIcon from '@material-ui/icons/ViewList'
 
 import { authMiddleWare } from '../util/Auth'
 import axios from 'axios'
@@ -194,6 +195,13 @@ const ReplySelector = (props) => {
                     onClick={handleOpenDialog}
                 >
                     <AddCircleIcon style={{ fontSize: 60 }} />
+                </IconButton>
+                <IconButton    
+                    color="primary"
+                    aria-label="Logout"
+                    href="/replies"
+                >
+                    <ViewListIcon style={{ fontSize: 60 }} />
                 </IconButton>
                 <IconButton    
                     color="primary"

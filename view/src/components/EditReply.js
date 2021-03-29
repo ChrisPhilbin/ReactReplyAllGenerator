@@ -79,6 +79,7 @@ const EditReply = (props) => {
                     alert("Reply successfully updated!")
                     props.setOpen(false)
                     props.setReplies([...props.replies, updatedReply])
+                    props.history.push('/replies')
                 }
             })
             .catch((error) => {
