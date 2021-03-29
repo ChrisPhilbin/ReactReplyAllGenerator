@@ -103,6 +103,8 @@ const DisplayAllReplies = (props) => {
         setOpen(true)
     }
 
+    console.log(replies, "replies array from DisplayAllReplies component")
+
     if (replies.length !== 0 && loading === false) {
         return( 
             <>

@@ -22,12 +22,11 @@ const EditReply = (props) => {
 
     let reply = props.reply
 
-    console.log(reply, "reply object")
-
     let [type, setType]       = useState(props.reply.type)
     let [rating, setRating]   = useState(props.reply.rating)
     let [message, setMessage] = useState(props.reply.message)
     let [types, setTypes]     = useState([])
+    let [updatedReplies, setUpdatedReplies] = useState([])
 
     useEffect(() => {
         fetch(process.env.REACT_APP_CORS + '/types')
@@ -57,6 +56,14 @@ const EditReply = (props) => {
         setRating(newValue)
     }
 
+    const updateReplyList= () => {
+        fetch(process.env.REACT_APP_CORS + '/replies')
+        .then(response => response.json())
+        .then(data => props.setReplies(data))
+        .then(alert("Reply has been updated!"))
+        .then(props.setOpen(false))
+    }
+
     const updateReply = (event) => {
         event.preventDefault()
 
@@ -76,14 +83,12 @@ const EditReply = (props) => {
         axios(options)
             .then((response) => {
                 if (response.status === 200) {
-                    alert("Reply successfully updated!")
-                    props.setOpen(false)
-                    props.setReplies([...props.replies, updatedReply])
-                    props.history.push('/replies')
+                    updateReplyList()
                 }
             })
             .catch((error) => {
-                props.setOpen(true)
+                props.setOpen(false)
+                alert("Something went wrong... please try again!")
                 console.log(error);
             })
     }
